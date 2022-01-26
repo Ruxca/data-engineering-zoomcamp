@@ -1,0 +1,34 @@
+services:
+  pgdatabase:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=ny_taxi
+    volumes:
+      - "./ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
+    ports:
+      - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    volumes:
+      - ./data_pgadmin:/var/lib/pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=password
+    ports:
+      - "8080:80"
+  # pgpython:
+  #   image: python:3.9
+  #   depends_on:
+  #     - pgdatabase
+  #     - pgadmin
+  #   environment:
+  #     - user=root
+  #     - password=password
+  #     - host=pgdatabase
+  #     - port=5432
+  #     - db=ny_taxi
+  #     - table_name=yellow_taxi_trips 
+  #     - url="http://172.24.208.1:8000/yellow_tripdata_2021-01.csv"
+
